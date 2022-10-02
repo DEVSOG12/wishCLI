@@ -38,8 +38,8 @@ int wish_num_bull() {
 
 
 /**
-   @happens Builtin command: print help.
-   @pre args List of args.  Not examined.
+   @happens Builtin command: change directory.
+   @pre args List of args.  args[0] is "cd".  args[1] is the directory.
    @post Always returns 1, to continue executing.
  */
 int wish_command(char **args)
@@ -84,9 +84,9 @@ int wish_exit_command(char **args)
 }
 
 /**
-  @brief Launch a program and wait for it to terminate.
-  @param args Null terminated list of arguments (including program).
-  @return Always returns 1, to continue execution.
+  @happens Launch a program and wait for it to terminate.
+  @pre args Null terminated list of arguments (including program).
+  @post Always returns 1, to continue execution.
  */
 int wish_launch(char **args)
 {
@@ -137,12 +137,12 @@ int wish_execute(char **args)
 }
 
 /**
-   @brief Read a line of input from stdin.
-   @return The line from stdin.
+   @happens Read a line of input from stdin.
+   @post The line from stdin.
  */
 char *wish_readline(void)
 {
-#ifdef LSH_USE_STD_GETLINE
+#ifdef WISH_USE_STD_GETLINE
     char *line = NULL;
   ssize_t bufsize = 0; // have getline allocate a buffer for us
   if (getline(&line, &bufsize, stdin) == -1) {
@@ -196,9 +196,9 @@ char *wish_readline(void)
 #define WISH_TOK_BUFSIZE 64
 #define WISH_TOK_DELIM " \t\r\n\a"
 /**
-   @brief Split a line into tokens (very naively).
-   @param line The line.
-   @return Null-terminated array of tokens.
+   @happens Split a line into tokens (very naively).
+   @pre line The line.
+   @post Null-terminated array of tokens.
  */
 char **wish_split_line(char *line)
 {
@@ -234,7 +234,7 @@ char **wish_split_line(char *line)
 }
 
 /**
-   @brief Loop getting input and executing it.
+   @happens Loop getting input and executing it.
  */
 void wish_loop(void)
 {
@@ -254,10 +254,9 @@ void wish_loop(void)
 }
 
 /**
-   @brief Main entry point.
-   @param argc Argument count.
-   @param argv Argument vector.
-   @return status code
+   @happens Main entry point.
+   @pre argc Argument count. argv Argument vector.
+   @post status code
  */
 int main(int argc, char **argv)
 {
